@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from votoApp.forms import VotoForm, CensoForm, DelVotoForm, GetVotosForm
 from votoApp.votoDB import (verificar_censo, registrar_voto,
                             eliminar_voto, get_votos_from_db)
+import socket
 
 
 TITLE = '(votoSite)'
@@ -28,6 +29,7 @@ def aportarinfo_voto(request):
         # add numeroDNI to data
         voto_data['censo_id'] = numeroDNI
         # save voto and get updated voto
+        voto_data['instancia'] = socket.gethostname()
         voto = registrar_voto(voto_data)
         if voto is None:
             return render(request, 'template_mensaje.html',
@@ -85,7 +87,8 @@ def testbd(request):
         data['censo_id'] = censo_form.cleaned_data['numeroDNI']
 
         # save voto
-        
+        voto_data = voto_form.cleaned_data
+        voto_data['instancia'] = socket.gethostname()
         voto = registrar_voto(data)
 
         if voto is None:
