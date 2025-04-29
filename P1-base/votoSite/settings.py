@@ -145,4 +145,3 @@ CACHES = {
 
 DATABASE_SERVER_URL = os.environ.get("DATABASE_SERVER_URL")
 STATIC_ROOT = BASE_DIR / "staticfiles"
-SESSION_ENGINE="django.contrib.sessions.backends.cache"
